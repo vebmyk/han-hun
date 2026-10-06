@@ -42,11 +42,41 @@
     allerede då no kvifor kva kvar korleis kor seinare endeleg difor allereie plutseleg`);
 
   const ADV = set(`ikke aldri også alltid bare ofte heller vel jo nok gjerne straks
-    endelig allerede fortsatt egentlig ikkje òg berre endeleg allereie framleis eigentleg`);
+    endelig allerede fortsatt egentlig ikkje òg berre endeleg allereie framleis eigentleg
+    faktisk virkelig verkeleg sikkert neppe visst`);
+
+  // More words that open a fronted phrase: "I dag kom hen", "Neste dag reiste hen".
+  const TIMEFRONT = set(`samme neste forrige hver sist tidlig sent klokka dagen natten kvelden
+    morgenen uken året helgen sommeren vinteren høsten våren`);
+  const PREP_AMBIG = set('etter før om siden sidan');   // also in AMBIG; as a clause opener they are prepositions
+  const COORD = set('og men eller for');
+  const fronted = (w) => FRONT.has(w) || PREP.has(w) || TIMEFRONT.has(w) || PREP_AMBIG.has(w);
+
+  // Subordinating words: a clause that contains one has its own subject before the verb.
+  const CONJ = set('at hvis når da mens fordi dersom viss då medan som');
 
   const SUBJPRON = set('jeg du han hun vi de man dere det den dette eg ho me dei ein dykk');
   const COPULA = set('er var vært være blir ble bli vart blei vore vere');
-  const MOTION = set('gå går gikk gått gjekk');
+
+  // "gå hen til", "han kom hen til meg": hen is the adverb 'over'. Infinitives/participles always;
+  // finite forms only when a subject precedes them (not "I går kom hen til meg").
+  const MOTION_INF = set('gå gått komme kommet løpe løpt dra dratt');
+  const MOTION_FIN = set('går gikk gjekk kom kommer løp løper dro drar');
+
+  // Verbs that take a clause without "at": "Jeg tror hen planlegger …" – hen is the subject
+  // whatever verb follows, which the finite-verb word list cannot guarantee.
+  const CLAUSAL = set(`tror trodde mener mente synes syntes håper håpet antar antok trur trudde
+    meiner meinte synest håpar`);
+
+  const SAY = set('sa sier seier vet veit visste');   // also take a bare clause: "som sa hen kom"
+
+  // Present/past forms that are identical to the imperative. Sentence-initially they are
+  // imperatives ("La hen gå", "Spør hen") unless the sentence ends in "?".
+  const IMP_AMBIG = set('la spør gjør finn les skriv syng vinn gjer gjev fortel ligg sit');
+
+  // Pronouns that fix the case of a coordinated hen: "han, hun eller hen", "ham og hen".
+  const SUBJ_ONLY = set('jeg du han hun vi de man eg ho me dei');
+  const OBJ_ONLY = set('meg deg ham henne oss dem');
 
   // Interrogative "hvor/kvar … hen" ("Hvor skal du hen?"): hen is an adverb, not the pronoun.
   const WHERE = set('hvor kvar kor');
@@ -79,19 +109,66 @@
     meiner meinte veit ønskjer ønskte tenkjer tenkte ventar bur budde jobbar søv græt skreiv
     skriv les las køyrer køyrde kallar saknar treng fann finn gjer vann vinn smilar ropar
     svarar byrjar sluttar gløymde gløymer snakkar leikar dansar syng kyssar valde opnar
-    forstod skjønar hjelpte`);
+    forstod skjønar hjelpte gjekk drog dreg sprang bar`);
 
-  // "hen" as a standalone word; not part of henne/henvise/hente/hen-pronomen.
-  const RE = /(?<![\p{L}\p{N}_]|\p{L}-)(hens?)(?![\p{L}\p{N}_]|-\p{L})/giu;
+  // "hen" as a standalone word; not part of henne/henvise/hente/hen-pronomen, nor of
+  // #hen, @hen, hen@x.no, www.hen.no or hen.txt.
+  const RE = /(?<![\p{L}\p{N}_@#]|\p{L}-|\p{L}\.)(hens?)(?![\p{L}\p{N}_@]|-\p{L}|\.\p{L})/giu;
 
   function sentenceTokens(before) {
     const seg = before.slice(-300).split(/[.!?…:;,«»"“”(\n]/).pop();
     return (seg.match(/[\p{L}\p{N}'’-]+/gu) || []).map((t) => t.toLowerCase());
   }
 
+  // First word after hen, looking past adverbs: "tror hen ikke kommer" -> "kommer".
   function nextWord(after) {
-    const m = after.match(/^\s+(\p{L}+)/u);
-    return m ? m[1].toLowerCase() : null;
+    let rest = after;
+    for (let i = 0; i < 3; i++) {
+      const m = rest.match(/^\s+(\p{L}+)/u);
+      if (!m) return null;
+      const w = m[1].toLowerCase();
+      if (!ADV.has(w)) return w;
+      rest = rest.slice(m[0].length);
+    }
+    return null;
+  }
+
+  // The pronoun hen is coordinated with, if any: "han, hun eller hen", "han/hun/hen", "ham og hen".
+  function listMate(before) {
+    const m = before.slice(-60).match(/(\p{L}+)(?:\s*[,\/]|\s+(?:og|eller|&|samt))\s*$/u);
+    const w = m && m[1].toLowerCase();
+    return !w ? null : SUBJ_ONLY.has(w) ? 'subj' : OBJ_ONLY.has(w) ? 'obj' : null;
+  }
+
+  // After a comma or closing quote a bare verb starts an inverted main clause ("«…», sa hen");
+  // elsewhere a sentence-initial verb is a question or an imperative.
+  function afterComma(before) {
+    const s = before.slice(-300);
+    const m = s.match(/([.!?…:;,«»"“”(\n])[^.!?…:;,«»"“”(\n]*$/);
+    if (!m) return false;
+    if (m[1] === ',' || m[1] === '»' || m[1] === '”') return true;
+    return m[1] === '"' && m.index > 0 && !/[\s(«“]/.test(s[m.index - 1]);
+  }
+
+  // Speech tag with a verb we do not know: «Hei», utbrøt hen.
+  function speechTag(before) {
+    const s = before.slice(-80);
+    const m = s.match(/([»”"])\s*,?\s*\p{L}+\s*$/u);
+    if (!m) return false;
+    return m[1] !== '"' || (m.index > 0 && !/[\s(«“]/.test(s[m.index - 1]));
+  }
+
+  function verbFirst(verb, before, after) {
+    if (afterComma(before) || !IMP_AMBIG.has(verb)) return 'subj';
+    const end = after.match(/[.!?…]/);
+    return end && end[0] === '?' ? 'subj' : 'obj';
+  }
+
+  // Fronted phrase, no subject before the verb: the subject follows it (V2).
+  // A leading "og/men" is skipped: "Og i dag kom hen" is inverted, "Men Per møtte hen" is not.
+  function isInverted(pre) {
+    const p = COORD.has(pre[0]) ? pre.slice(1) : pre;
+    return p.length > 0 && fronted(p[0]) && !p.some((t) => SUBJPRON.has(t) || CONJ.has(t));
   }
 
   const isVerb = (w) => !!w && (VERB.has(w) || VERB_NN.has(w));
@@ -124,8 +201,10 @@
     const prev = tokens[tokens.length - 2];
     if (isWhereHen(tokens, after)) return true;
     if (last === 'adverbet' || last === 'adverb') return true;     // "adverbet hen" names the word
-    if (MOTION.has(last) && prev && !FRONT.has(prev) &&
+    if ((MOTION_INF.has(last) || (MOTION_FIN.has(last) && prev && !isInverted(tokens.slice(0, -1)))) &&
         /^\s+(?:til|mot|imot|ad|og\s+\p{L}+)/u.test(aft)) return true;
+    if (/^(?:langt|helt)$/.test(last || '') &&                     // "langt hen på natta"
+        /^\s+(?:på|mot|imot|i|over|til|ut|ad|etter)(?![\p{L}])/u.test(aft)) return true;
     if (last === 'stå' && /^(la|lar|lot|lat)$/.test(tokens[tokens.length - 3] || '')) return true;
     if (/^(?:falle|faller|falt|falne)$/.test(last || '') &&
         /^\s+i\s+(?:søvn|glemmeboken)/u.test(aft)) return true;
@@ -134,24 +213,37 @@
   }
 
   // 'subj' or 'obj'
-  function role(tokens, after) {
-    if (!tokens.length) return 'subj';
+  function role(tokens, after, before) {
     const nf = isVerb(nextWord(after)); // a finite verb follows: "tror hen kommer"
+    const mate = listMate(before);
+    if (mate && !(mate === 'obj' && nf)) return mate;
+    if (!tokens.length) return 'subj';
     tokens = tokens.slice();
     while (tokens.length && ADV.has(tokens[tokens.length - 1])) tokens.pop();
     if (!tokens.length) return 'subj';
 
     const last = tokens[tokens.length - 1];
     if (SUB.has(last)) return 'subj';
+    if (last === 'for' && !afterComma(before)) return 'obj';        // "For hen er det viktig": preposition
     if (AMBIG.has(last)) return nf ? 'subj' : 'obj';
     if (PREP.has(last)) return 'obj';
     if (COPULA.has(last)) return 'subj';
     if (SUBJPRON.has(last)) return nf ? 'subj' : 'obj';
+    if (CLAUSAL.has(last) && nextWord(after)) return 'subj';          // "Jeg tror hen planlegger …"
 
     const pre = tokens.slice(0, -1);
-    const onlyFronted = pre.every((t) => FRONT.has(t));
-    if (isVerb(last) && onlyFronted) return 'subj';                   // "Så gikk hen", "Er hen hjemme?"
-    if (!isVerb(last) && tokens.length >= 2 && onlyFronted) return 'subj'; // "Så skrek hen"
+    if (isVerb(last)) {
+      if (!pre.length) return verbFirst(last, before, after);         // "Er hen hjemme?" / "La hen gå."
+      if (pre.every((t) => FRONT.has(t)) || isInverted(pre)) return 'subj';  // "Så gikk hen", "I dag kom hen"
+      if (pre[pre.length - 1] === 'som' && !CLAUSAL.has(last) && !SAY.has(last)) {
+        return 'obj';                                                 // "alle som kjenner hen vet": som is the subject
+      }
+    } else if (pre.length) {
+      if (pre.every((t) => FRONT.has(t)) ||                           // "Så hvisket hen"
+          (isInverted(pre) && /(?:te|de|er|ar)$/.test(last))) return 'subj';  // "Neste dag reiste hen"
+    } else if (speechTag(before)) {
+      return 'subj';                                                  // «Hei», utbrøt hen.
+    }
     return nf ? 'subj' : 'obj';
   }
 
@@ -181,7 +273,7 @@
         const after = (text + ca).slice(offset + m.length);
         const tokens = sentenceTokens(before);
         if (isAdverbUse(tokens, after)) return m;
-        out = f[role(tokens, after)];
+        out = f[role(tokens, after, before)];
       }
       return matchCase(m, out);
     });

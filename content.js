@@ -83,9 +83,13 @@
     }
   }
 
+  // Cheap pre-filter: skips nodes that only contain "henne", "hente", "hendelse" etc., so the
+  // Range-based context is built only where hen.js may actually replace something.
+  const MAYBE_HEN = /(?<![\p{L}\p{N}_])hens?(?![\p{L}\p{N}_])/iu;
+
   function handleText(node) {
     const text = node.nodeValue;
-    if (!text || !/hen/i.test(text)) return;
+    if (!text || !MAYBE_HEN.test(text)) return;
     const el = node.parentElement;
     if (!el || el.closest(SKIP)) return;
     const langEl = el.closest('[lang]');
