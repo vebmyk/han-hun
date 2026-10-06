@@ -1,0 +1,94 @@
+<!doctype html>
+<!-- Demo page for store screenshots; not part of the extension package.
+     index.html            = page as it is
+     index.html?mode=after = same page with the real hen.js + content.js loaded, like the extension would -->
+<html lang="nb">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Eksempeltekster</title>
+  <style>
+    :root { --ink: #1d2433; --muted: #5d6677; --line: #dde1e8; --bg: #f4f6f9; --card: #fff; --accent: #2457c5; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--bg); color: var(--ink); font: 19px/1.55 system-ui, "Segoe UI", sans-serif; }
+    header { max-width: 1180px; margin: 0 auto; padding: 44px 32px 24px; display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; }
+    h1 { margin: 0; font-size: 36px; letter-spacing: -0.01em; }
+    header p { margin: 4px 0 0; color: var(--muted); }
+    #badge { white-space: nowrap; padding: 6px 16px; border-radius: 999px; font-size: 15px; font-weight: 600; border: 1px solid var(--line); background: #fff; color: var(--muted); }
+    body.after #badge { background: var(--accent); border-color: var(--accent); color: #fff; }
+    main { max-width: 1180px; margin: 0 auto; padding: 0 32px 40px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+    section { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 22px 24px 10px; }
+    h2 { margin: 0; font-size: 20px; }
+    .sub { margin: 0 0 12px; font-size: 15px; color: var(--muted); }
+    section p:not(.sub) { margin: 0 0 12px; }
+    @media (max-width: 900px) { main { grid-template-columns: 1fr; } header { flex-direction: column; align-items: flex-start; } }
+  </style>
+</head>
+<body>
+  <header>
+    <div>
+      <h1>Eksempeltekster</h1>
+      <p>Samme side, med og uten utvidelsen.</p>
+    </div>
+    <span id="badge"></span>
+  </header>
+
+  <main>
+    <section>
+      <h2>Subjekt</h2>
+      <p class="sub">Han/hun foran verbet og etter innledende ledd</p>
+      <p>Hen kom hjem sent. Så gikk hen til kjøkkenet og satte på kaffe. Jeg tror hen kommer i morgen også.</p>
+      <p>Når hen kommer, ringer jeg. Hvorfor kom ikke hen i går?</p>
+    </section>
+
+    <section>
+      <h2>Objekt</h2>
+      <p class="sub">Ham/henne etter verb og preposisjon</p>
+      <p>Jeg møtte hen i går. Vi snakket om jobben, og jeg ga hen en gave.</p>
+      <p>Spør hen om hjelp, eller ring hen i morgen. Jeg skal hente hen fra stasjonen.</p>
+    </section>
+
+    <section>
+      <h2>Eiendomsform</h2>
+      <p class="sub">Hans/hennes</p>
+      <p>Det er hens bok. Hens bil står utenfor.</p>
+      <p>Per og hen gikk på kino, og jeg møtte Per og hen igjen etterpå.</p>
+    </section>
+
+    <section>
+      <h2>Står uendret</h2>
+      <p class="sub">Ikke alle forekomster er pronomen</p>
+      <p>Han gikk hen til døren og ventet. Vi lot det stå hen. Han falt hen i søvn.</p>
+      <p>Hvor skal du hen? Hvor bodde hen før?</p>
+    </section>
+
+    <section>
+      <h2>Replikker</h2>
+      <p class="sub">Talemarkører og spørsmål</p>
+      <p>«Jeg kommer snart», hvisket hen.</p>
+      <p>– Hei, sa hen. Hva sier hen til det?</p>
+    </section>
+
+    <section lang="nn">
+      <h2>Nynorsk</h2>
+      <p class="sub">Han/ho, han/henne og hans/hennar</p>
+      <p>Hen gjekk heim tidleg i går. Eg trur hen kjem i morgon.</p>
+      <p>Eg har ikkje sett hen her på lenge, og eg har gløymt namnet hens.</p>
+    </section>
+  </main>
+
+  <script>
+    (function () {
+      var after = /[?&]mode=after\b/.test(location.search);
+      document.body.classList.add(after ? 'after' : 'before');
+      document.getElementById('badge').textContent = after ? 'Med utvidelsen' : 'Uten utvidelsen';
+      if (after) {
+        // Same scripts, same order as manifest.json. Without the chrome.* API, content.js falls back to its default settings.
+        ['../../hen.js', '../../content.js'].forEach(function (src) {
+          document.write('<script src="' + src + '"><\/script>');
+        });
+      }
+    })();
+  </script>
+</body>
+</html>
