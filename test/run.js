@@ -208,6 +208,24 @@ const cases = [
   ['hun', 'Han, ho eller hen kan søkje.', 'Han, ho eller ho kan søkje.', { lang: 'nn' }],
   ['hun', '«Eg kjem snart», kviskra hen.', '«Eg kjem snart», kviskra ho.', { lang: 'nn' }],
   ['hun', 'For hen er det viktig.', 'For henne er det viktig.', { lang: 'nn' }],
+  // --- vedkommende (vedkomande in Nynorsk): same form for subject and object ---
+  ['vedkommende', 'Hen kom hjem sent.', 'Vedkommende kom hjem sent.'],
+  ['vedkommende', 'Jeg møtte hen i går.', 'Jeg møtte vedkommende i går.'],
+  ['vedkommende', 'Gi det til hen.', 'Gi det til vedkommende.'],
+  ['vedkommende', 'Det er hens bok.', 'Det er vedkommendes bok.'],
+  ['vedkommende', 'HEN kom.', 'VEDKOMMENDE kom.'],
+  ['vedkommende', 'HENS BOK', 'VEDKOMMENDES BOK'],
+  ['vedkommende', 'Jeg møtte hen. Hen smilte.', 'Jeg møtte vedkommende. Vedkommende smilte.'],
+  ['vedkommende', 'hen', 'vedkommende', { before: 'Jeg møtte ', after: '.' }],
+  ['vedkommende', 'Han gikk hen til døren.', 'Han gikk hen til døren.'],
+  ['vedkommende', 'Hvor skal du hen?', 'Hvor skal du hen?'],
+  ['vedkommende', 'Han henvendte seg til henne.', 'Han henvendte seg til henne.'],
+  ['vedkommende', 'Hen kom heim.', 'Vedkomande kom heim.', { lang: 'nn' }],
+  ['vedkommende', 'Eg møtte hen i går.', 'Eg møtte vedkomande i går.', { lang: 'nn' }],
+  ['vedkommende', 'Det er hens bok.', 'Det er vedkomandes bok.', { lang: 'nn' }],
+  ['vedkommende', 'HEN kom.', 'VEDKOMANDE kom.', { lang: 'nn' }],
+  ['vedkommende', 'Han gjekk hen til døra.', 'Han gjekk hen til døra.', { lang: 'nn' }],
+  ['vedkommende', 'Hen kom hjem sent.', 'Vedkommende kom hjem sent.', { lang: 'nb' }],
 ];
 
 let failed = 0;

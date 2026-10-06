@@ -12,16 +12,19 @@
 
   const set = (s) => new Set(s.split(/\s+/).filter(Boolean));
 
-  // Bokmål forms. Nynorsk (ctx.lang === 'nn') has its own: ho, han as object, hennar.
+  // Bokmål forms. Nynorsk (ctx.lang === 'nn') has its own: ho, han as object, hennar, vedkomande.
+  // "vedkommende" does not inflect for case, so subject and object are the same.
   const FORMS = {
     slash: { subj: 'han/hun', obj: 'ham/henne', poss: 'hans/hennes' },
     han:   { subj: 'han',     obj: 'ham',       poss: 'hans' },
     hun:   { subj: 'hun',     obj: 'henne',     poss: 'hennes' },
+    vedkommende: { subj: 'vedkommende', obj: 'vedkommende', poss: 'vedkommendes' },
   };
   const FORMS_NN = {
     slash: { subj: 'han/ho', obj: 'han/henne', poss: 'hans/hennar' },
     han:   { subj: 'han',    obj: 'han',       poss: 'hans' },
     hun:   { subj: 'ho',     obj: 'henne',     poss: 'hennar' },
+    vedkommende: { subj: 'vedkomande', obj: 'vedkomande', poss: 'vedkomandes' },
   };
 
   // Prepositions that are always followed by the object form.
@@ -255,7 +258,7 @@
 
   /**
    * @param {string} text   text to convert
-   * @param {'slash'|'han'|'hun'} mode
+   * @param {'slash'|'han'|'hun'|'vedkommende'} mode
    * @param {{before?:string, after?:string, lang?:'nb'|'nn'}} [ctx]
    *   before/after: surrounding text (used only for decisions); lang: 'nn' selects Nynorsk forms
    */

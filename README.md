@@ -12,6 +12,7 @@ Browser extension (Manifest V3, Chrome/Edge; Firefox needs a small manifest twea
 
 - **han/hun** (default): hen → han/hun, ham/henne (object), hans/hennes (possessive). On Nynorsk text the forms are han/ho, han/henne, hans/hennar (in "always hun" mode: ho, henne, hennar). Nynorsk is picked from the nearest `lang` attribute (`nn`), or, for `lang="no"` or no `lang`, from marker words like *ikkje*, *eg*, *kva*.
 - **always han** or **always hun**
+- **always vedkommende**: hen → vedkommende, hens → vedkommendes. On Nynorsk text: vedkomande, vedkomandes. The word does not inflect for case, so subject/object detection does not matter in this mode.
 - **random per page**: one pick per page load, so a text never flips gender midway
 - Per-site disable list, and an option to skip the language check
 - Dictionary sites are always skipped, since they discuss "hen" as a word: ordnett.no, naob.no, ordbokene.no, ordbok.uib.no and dokpro.uio.no (including subdomains). The list is `DICTIONARY_HOSTS` in `content.js`.
