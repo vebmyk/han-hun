@@ -9,6 +9,7 @@ A Manifest V3 browser extension (Chrome/Edge) that rewrites the Norwegian neopro
 ## Commands
 
 - Run tests: `node test/run.js`
+- Build the store package: `node scripts/package.js` → `dist/hen-extension-<version>.zip` (runtime files only; if you add a runtime file, add it to the `files` list in `scripts/package.js`). Store text lives in `store/LISTING.md`, the privacy policy in `PRIVACY.md`; keep both in sync if permissions or stored settings change.
 - Try the extension: load this folder unpacked at `chrome://extensions` (Developer mode). After editing, reload the extension and the test page.
 
 Tests are a single `cases` array of `[mode, input, expected, optionalCtx]` in `test/run.js`; add failing real-world sentences there, then tune `hen.js`. There is no single-test runner.

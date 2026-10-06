@@ -33,6 +33,14 @@ node test/run.js
 
 Add real-world sentences that go wrong to the `cases` array in `test/run.js`, then adjust the word lists in `hen.js`.
 
+## Publishing
+
+```
+node scripts/package.js
+```
+
+builds `dist/hen-extension-<version>.zip` containing only the runtime files (it also checks that the icons exist and have the sizes the manifest claims). Bump `version` in `manifest.json` before each new upload. Listing text, permission justifications and the asset checklist are in [store/LISTING.md](store/LISTING.md); the privacy policy is [PRIVACY.md](PRIVACY.md).
+
 ## Known limitations
 
 - Subject/object detection is heuristic. Known misses: an object followed by a finite verb inside an infinitive subject (*Å møte hen var fint* → subject form), a comma-less *for* meaning "because" (read as the preposition), a verb that is not in the word lists directly after hen (*hen* + unlisted verb after a verb that is neither clausal nor a preposition), and hen alone in its own element such as a list item, where the rest of the sentence is not visible.

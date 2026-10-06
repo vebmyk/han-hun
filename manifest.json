@@ -3,6 +3,13 @@
   "name": "Hen → han/hun",
   "version": "0.1.0",
   "description": "Replaces the Norwegian neopronoun \"hen\" with han/hun (or han, or hun) on Norwegian pages.",
+  "homepage_url": "https://github.com/vebmyk/han-hun",
+  "icons": {
+    "16": "icons/icon_16.png",
+    "32": "icons/icon_32.png",
+    "48": "icons/icon_48.png",
+    "128": "icons/icon_128.png"
+  },
   "permissions": ["storage"],
   "content_scripts": [
     {
@@ -14,7 +21,11 @@
   ],
   "action": {
     "default_title": "Hen → han/hun",
-    "default_popup": "options.html"
+    "default_popup": "options.html",
+    "default_icon": {
+      "16": "icons/icon_16.png",
+      "32": "icons/icon_32.png"
+    }
   },
   "options_ui": {
     "page": "options.html",
