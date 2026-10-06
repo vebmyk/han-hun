@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="nb">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hen → han/hun</title>
+  <style>
+    body { font: 14px/1.4 system-ui, sans-serif; min-width: 320px; max-width: 520px; margin: 16px; }
+    h1 { font-size: 16px; margin: 0 0 12px; }
+    label { display: block; margin: 12px 0 4px; font-weight: 600; }
+    .row label { display: inline; font-weight: normal; }
+    select, textarea { width: 100%; box-sizing: border-box; font: inherit; padding: 4px; }
+    small { color: #666; }
+    #status { color: #2a7; height: 1.2em; margin-top: 8px; }
+  </style>
+</head>
+<body>
+  <h1>Hen → han/hun</h1>
+
+  <div class="row"><input type="checkbox" id="enabled"> <label for="enabled">Aktivert</label></div>
+
+  <label for="mode">Erstatt «hen» med</label>
+  <select id="mode">
+    <option value="slash">han/hun (ham/henne, hans/hennes)</option>
+    <option value="han">alltid han (ham, hans)</option>
+    <option value="hun">alltid hun (henne, hennes)</option>
+    <option value="random">tilfeldig per side (han eller hun)</option>
+  </select>
+
+  <label for="disabledHosts">Deaktiverte nettsteder</label>
+  <textarea id="disabledHosts" rows="4" placeholder="eksempel.no&#10;annet.com"></textarea>
+  <small>Ett vertsnavn per linje; underdomener er inkludert.</small>
+
+  <div class="row" style="margin-top:12px">
+    <input type="checkbox" id="skipLangCheck">
+    <label for="skipLangCheck">Hopp over språksjekk (kjør på alle sider)</label>
+  </div>
+  <small>Som standard kjører utvidelsen bare på sider som er merket som eller gjenkjent som norsk.</small>
+
+  <div id="status"></div>
+  <script src="options.js"></script>
+</body>
+</html>
