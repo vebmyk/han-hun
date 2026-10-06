@@ -16,12 +16,14 @@
   // "vedkommende" does not inflect for case, so subject and object are the same.
   const FORMS = {
     slash: { subj: 'han/hun', obj: 'ham/henne', poss: 'hans/hennes' },
+    eller: { subj: 'han eller hun', obj: 'ham eller henne', poss: 'hans eller hennes' },
     han:   { subj: 'han',     obj: 'ham',       poss: 'hans' },
     hun:   { subj: 'hun',     obj: 'henne',     poss: 'hennes' },
     vedkommende: { subj: 'vedkommende', obj: 'vedkommende', poss: 'vedkommendes' },
   };
   const FORMS_NN = {
     slash: { subj: 'han/ho', obj: 'han/henne', poss: 'hans/hennar' },
+    eller: { subj: 'han eller ho', obj: 'han eller henne', poss: 'hans eller hennar' },
     han:   { subj: 'han',    obj: 'han',       poss: 'hans' },
     hun:   { subj: 'ho',     obj: 'henne',     poss: 'hennar' },
     vedkommende: { subj: 'vedkomande', obj: 'vedkomande', poss: 'vedkomandes' },
@@ -258,7 +260,7 @@
 
   /**
    * @param {string} text   text to convert
-   * @param {'slash'|'han'|'hun'|'vedkommende'} mode
+   * @param {'slash'|'eller'|'han'|'hun'|'vedkommende'} mode
    * @param {{before?:string, after?:string, lang?:'nb'|'nn'}} [ctx]
    *   before/after: surrounding text (used only for decisions); lang: 'nn' selects Nynorsk forms
    */

@@ -208,6 +208,17 @@ const cases = [
   ['hun', 'Han, ho eller hen kan søkje.', 'Han, ho eller ho kan søkje.', { lang: 'nn' }],
   ['hun', '«Eg kjem snart», kviskra hen.', '«Eg kjem snart», kviskra ho.', { lang: 'nn' }],
   ['hun', 'For hen er det viktig.', 'For henne er det viktig.', { lang: 'nn' }],
+  // --- "han eller hun": slash mode with "eller" ---
+  ['eller', 'Hen kom.', 'Han eller hun kom.'],
+  ['eller', 'Jeg møtte hen.', 'Jeg møtte ham eller henne.'],
+  ['eller', 'Det er hens bok.', 'Det er hans eller hennes bok.'],
+  ['eller', 'HEN kom.', 'HAN ELLER HUN kom.'],
+  ['eller', 'HENS BOK', 'HANS ELLER HENNES BOK'],
+  ['eller', 'Jeg møtte hen. Hen smilte.', 'Jeg møtte ham eller henne. Han eller hun smilte.'],
+  ['eller', 'Han gikk hen til døren.', 'Han gikk hen til døren.'],
+  ['eller', 'Hen var her i går.', 'Han eller ho var her i går.', { lang: 'nn' }],
+  ['eller', 'Eg møtte hen i går.', 'Eg møtte han eller henne i går.', { lang: 'nn' }],
+  ['eller', 'Eg har gløymt namnet hens.', 'Eg har gløymt namnet hans eller hennar.', { lang: 'nn' }],
   // --- vedkommende (vedkomande in Nynorsk): same form for subject and object ---
   ['vedkommende', 'Hen kom hjem sent.', 'Vedkommende kom hjem sent.'],
   ['vedkommende', 'Jeg møtte hen i går.', 'Jeg møtte vedkommende i går.'],
