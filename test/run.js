@@ -237,6 +237,14 @@ const cases = [
   ['vedkommende', 'HEN kom.', 'VEDKOMANDE kom.', { lang: 'nn' }],
   ['vedkommende', 'Han gjekk hen til døra.', 'Han gjekk hen til døra.', { lang: 'nn' }],
   ['vedkommende', 'Hen kom hjem sent.', 'Vedkommende kom hjem sent.', { lang: 'nb' }],
+  // --- quoted hen (ctx.skipQuoted) ---
+  ['han', 'Ordet «hen» er nytt.', 'Ordet «hen» er nytt.', { skipQuoted: true }],
+  ['han', 'Ordet "hen" er nytt, og "hens" også.', 'Ordet "hen" er nytt, og "hens" også.', { skipQuoted: true }],
+  ['han', 'Bruk “Hen” eller ‘hen’.', 'Bruk “Hen” eller ‘hen’.', { skipQuoted: true }],
+  ['han', 'hen', 'hen', { skipQuoted: true, before: 'Ordet «', after: '» er nytt.' }],
+  ['han', 'Ordet «hen» er nytt.', 'Ordet «han» er nytt.'],
+  ['han', '«Hen kom hjem sent», sa hun.', '«Han kom hjem sent», sa hun.', { skipQuoted: true }],
+  ['han', 'Han sa «jeg møtte hen».', 'Han sa «jeg møtte ham».', { skipQuoted: true }],
 ];
 
 let failed = 0;

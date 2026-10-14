@@ -35,6 +35,7 @@ What it does
 • Replaces "hen" with the right form: han/hun (subject), ham/henne (object), hans/hennes (possessive). It also supports Nynorsk (han/ho, hans/hennar).
 • Choose the replacement: "han/hun", "han eller hun", always "han", always "hun", always "vedkommende", or a random pick per page (the same pick for the whole page, so a text never changes midway).
 • Only runs on Norwegian pages: pages marked nb/nn/no, or recognised as Norwegian from the text. You can turn the language check off.
+• Option to leave «hen» alone when the word itself is in quote marks, as when a text talks about the word.
 • Per-site disable list. Dictionary sites such as ordnett.no and ordbokene.no are in the list by default, since they discuss "hen" as a word.
 • Works on content that loads after the page, such as feeds and comment sections.
 
@@ -58,6 +59,7 @@ Dette gjør den
 • Erstatter «hen» med riktig form: han/hun (subjekt), ham/henne (objekt), hans/hennes (eiendomsord). Støtter også nynorsk (han/ho, hans/hennar).
 • Du velger erstatning: «han/hun», «han eller hun», alltid «han», alltid «hun», alltid «vedkommende», eller tilfeldig per side (samme valg hele siden, så en tekst skifter aldri midt i).
 • Kjører bare på norske sider: sider merket nb/nn/no, eller gjenkjent som norske ut fra teksten. Språksjekken kan slås av.
+• Valg for å la «hen» stå når ordet selv står i anførselstegn, for eksempel når en tekst omtaler ordet.
 • Liste over nettsteder du vil deaktivere. Ordbokssider som ordnett.no og ordbokene.no står på lista som standard, siden de omtaler «hen» som ord.
 • Virker også på innhold som lastes inn etter at siden er åpnet, for eksempel strømmer og kommentarfelt.
 

@@ -264,18 +264,25 @@
    * @param {{before?:string, after?:string, lang?:'nb'|'nn'}} [ctx]
    *   before/after: surrounding text (used only for decisions); lang: 'nn' selects Nynorsk forms
    */
+  // Quote marks used in Norwegian text. With ctx.skipQuoted, a hen/hens enclosed directly in them
+  // («hen», "hens") is left alone: it is usually the word being talked about, not a pronoun.
+  const QUOTE_OPEN = /["'«»“”„‘’‚‹›]$/u;
+  const QUOTE_CLOSE = /^["'«»“”„‘’‚‹›]/u;
+
   function replaceHen(text, mode, ctx) {
     const forms = ctx && ctx.lang === 'nn' ? FORMS_NN : FORMS;
     const f = forms[mode] || forms.slash;
     const cb = (ctx && ctx.before) || '';
     const ca = (ctx && ctx.after) || '';
+    const skipQuoted = !!(ctx && ctx.skipQuoted);
     return text.replace(RE, (m, _g, offset) => {
       let out;
+      const before = (cb + text).slice(0, cb.length + offset);
+      const after = (text + ca).slice(offset + m.length);
+      if (skipQuoted && QUOTE_OPEN.test(before) && QUOTE_CLOSE.test(after)) return m;
       if (m.toLowerCase() === 'hens') {
         out = f.poss;
       } else {
-        const before = (cb + text).slice(0, cb.length + offset);
-        const after = (text + ca).slice(offset + m.length);
         const tokens = sentenceTokens(before);
         if (isAdverbUse(tokens, after)) return m;
         out = f[role(tokens, after, before)];

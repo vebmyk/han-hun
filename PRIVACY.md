@@ -8,7 +8,7 @@
 
 **Page content.** To replace the word "hen", the extension reads the text of the web pages you visit. This happens entirely inside your browser. The text is not stored, logged or sent anywhere.
 
-**Settings.** The extension saves your settings with the browser's `storage.sync` API: whether it is enabled, the replacement mode, whether the language check is skipped, and the list of websites you have disabled. This data stays in your browser. If browser sync is turned on, your browser vendor (Google or Microsoft) may sync it between your own devices under its own privacy policy. The developer has no access to it.
+**Settings.** The extension saves your settings with the browser's `storage.sync` API: whether it is enabled, the replacement mode, whether the language check is skipped, whether quoted "hen" is left alone, and the list of websites you have disabled. This data stays in your browser. If browser sync is turned on, your browser vendor (Google or Microsoft) may sync it between your own devices under its own privacy policy. The developer has no access to it.
 
 **Permissions.**
 - `storage` – to save the settings above.

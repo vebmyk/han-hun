@@ -4,7 +4,7 @@
 
   // Dictionary sites discuss "hen" as a word (adverb, neopronoun entry), so rewriting would corrupt them.
   const DICTIONARY_HOSTS = ['ordnett.no', 'naob.no', 'ordbokene.no', 'ordbok.uib.no', 'dokpro.uio.no'];
-  const DEFAULTS = { enabled: true, mode: 'slash', skipLangCheck: false, disabledHosts: DICTIONARY_HOSTS.join('\n') };
+  const DEFAULTS = { enabled: true, mode: 'slash', skipLangCheck: false, skipQuoted: false, disabledHosts: DICTIONARY_HOSTS.join('\n') };
   let settings;
   try {
     settings = await chrome.storage.sync.get(DEFAULTS);
@@ -96,6 +96,7 @@
     if (langEl && langEl !== document.documentElement && !isNoLang(langEl.getAttribute('lang'))) return;
     const ctx = contextFor(node);
     ctx.lang = variantFor(el);
+    ctx.skipQuoted = settings.skipQuoted;
     const out = HenFilter.replaceHen(text, mode, ctx);
     if (out !== text) node.nodeValue = out;
   }

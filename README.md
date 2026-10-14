@@ -16,6 +16,7 @@ Browser extension (Manifest V3, Chrome/Edge; Firefox needs a small manifest twea
 - **always vedkommende**: hen → vedkommende, hens → vedkommendes. On Nynorsk text: vedkomande, vedkomandes. The word does not inflect for case, so subject/object detection does not matter in this mode.
 - **random per page**: one pick per page load, so a text never flips gender midway
 - Per-site disable list, and an option to skip the language check
+- Option to leave "hen"/"hens" alone when the word itself is in quote marks («hen», "hen"), as when the text talks about the word
 - Dictionary sites are in the disable list by default, since they discuss "hen" as a word: ordnett.no, naob.no, ordbokene.no, ordbok.uib.no and dokpro.uio.no (including subdomains). You can remove them in the settings. The defaults are `DICTIONARY_HOSTS` in `content.js` and `options.js`.
 
 The extension only runs on pages marked `lang="nb|nn|no"`, or detected as Norwegian from the text. Elements with a different `lang` attribute are skipped.
