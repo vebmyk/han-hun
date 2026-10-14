@@ -1,4 +1,6 @@
-const DEFAULTS = { enabled: true, mode: 'slash', skipLangCheck: false, disabledHosts: '' };
+// Dictionary sites discuss "hen" as a word, so they start out disabled; keep in sync with content.js.
+const DICTIONARY_HOSTS = ['ordnett.no', 'naob.no', 'ordbokene.no', 'ordbok.uib.no', 'dokpro.uio.no'];
+const DEFAULTS = { enabled: true, mode: 'slash', skipLangCheck: false, disabledHosts: DICTIONARY_HOSTS.join('\n') };
 const $ = (id) => document.getElementById(id);
 
 chrome.storage.sync.get(DEFAULTS).then((s) => {

@@ -2,7 +2,9 @@
 (async function () {
   'use strict';
 
-  const DEFAULTS = { enabled: true, mode: 'slash', skipLangCheck: false, disabledHosts: '' };
+  // Dictionary sites discuss "hen" as a word (adverb, neopronoun entry), so rewriting would corrupt them.
+  const DICTIONARY_HOSTS = ['ordnett.no', 'naob.no', 'ordbokene.no', 'ordbok.uib.no', 'dokpro.uio.no'];
+  const DEFAULTS = { enabled: true, mode: 'slash', skipLangCheck: false, disabledHosts: DICTIONARY_HOSTS.join('\n') };
   let settings;
   try {
     settings = await chrome.storage.sync.get(DEFAULTS);
@@ -12,9 +14,7 @@
   if (!settings.enabled) return;
 
   const host = location.hostname;
-  // Dictionary sites discuss "hen" as a word (adverb, neopronoun entry), so rewriting would corrupt them.
-  const DICTIONARY_HOSTS = ['ordnett.no', 'naob.no', 'ordbokene.no', 'ordbok.uib.no', 'dokpro.uio.no'];
-  const disabled = DICTIONARY_HOSTS.concat(String(settings.disabledHosts || '').split(/\s+/).filter(Boolean));
+  const disabled = String(settings.disabledHosts || '').split(/\s+/).filter(Boolean);
   if (disabled.some((h) => host === h || host.endsWith('.' + h))) return;
 
   // "random" = one pick per page load, so a page never flips gender mid-text.
