@@ -1,18 +1,23 @@
 # Hen → han/hun
 
+<p>
+  <a href="https://github.com/vebmyk/han-hun/releases/latest"><img alt="Get it for Firefox" src="https://img.shields.io/badge/Get_it_for-Firefox-FF7139?style=for-the-badge&logo=firefoxbrowser&logoColor=white"></a>
+  <a href="https://chromewebstore.google.com/detail/hen-%E2%86%92-hanhun/ilcdgkbiejhbgglkjmkplinhbebejldb"><img alt="Get it for Chrome / Chromium" src="https://img.shields.io/badge/Get_it_for-Chrome_%2F_Chromium-4285F4?style=for-the-badge&logo=googlechrome&logoColor=white"></a>
+</p>
+
 Browser extension (Manifest V3, Chrome/Edge and Firefox 140+) that replaces the Norwegian neopronoun "hen" with han/hun on Norwegian pages.
 
-## Install (Chrome / Edge)
+## Install
 
-1. Open `chrome://extensions` and enable **Developer mode**.
-2. Click **Load unpacked** and select this folder.
-3. Click the extension icon to choose your settings.
+- **Chrome, Edge and other Chromium browsers:** install from the [Chrome Web Store](https://chromewebstore.google.com/detail/hen-%E2%86%92-hanhun/ilcdgkbiejhbgglkjmkplinhbebejldb).
+- **Firefox:** download the `.xpi` file from the [latest release](https://github.com/vebmyk/han-hun/releases/latest) and open it in Firefox (or drag it onto a Firefox window), then click **Add**. It is signed by Mozilla and stays installed. Firefox 140 or newer is required.
 
-## Install (Firefox)
+Click the extension icon to choose your settings.
 
-1. Run `node scripts/package.js` (see [Publishing](#publishing)).
-2. Open `about:debugging#/runtime/this-firefox`, click **Load Temporary Add-on…** and pick `dist/hen-extension-<version>-firefox.zip`. A temporary add-on is removed when Firefox restarts; for a permanent install it must be signed through addons.mozilla.org.
-3. Click the extension icon to choose your settings.
+### From source
+
+- **Chrome / Edge:** open `chrome://extensions`, enable **Developer mode**, click **Load unpacked** and select this folder.
+- **Firefox:** run `node scripts/package.js` (see [Publishing](#publishing)), open `about:debugging#/runtime/this-firefox`, click **Load Temporary Add-on…** and pick `dist/hen-extension-<version>-firefox.zip`. A temporary add-on is removed when Firefox restarts.
 
 ## Settings
 
