@@ -1,11 +1,17 @@
 # Hen → han/hun
 
-Browser extension (Manifest V3, Chrome/Edge; Firefox needs a small manifest tweak) that replaces the Norwegian neopronoun "hen" with han/hun on Norwegian pages.
+Browser extension (Manifest V3, Chrome/Edge and Firefox 140+) that replaces the Norwegian neopronoun "hen" with han/hun on Norwegian pages.
 
 ## Install (Chrome / Edge)
 
 1. Open `chrome://extensions` and enable **Developer mode**.
 2. Click **Load unpacked** and select this folder.
+3. Click the extension icon to choose your settings.
+
+## Install (Firefox)
+
+1. Run `node scripts/package.js` (see [Publishing](#publishing)).
+2. Open `about:debugging#/runtime/this-firefox`, click **Load Temporary Add-on…** and pick `dist/hen-extension-<version>-firefox.zip`. A temporary add-on is removed when Firefox restarts; for a permanent install it must be signed through addons.mozilla.org.
 3. Click the extension icon to choose your settings.
 
 ## Settings
@@ -40,7 +46,7 @@ Add real-world sentences that go wrong to the `cases` array in `test/run.js`, th
 node scripts/package.js
 ```
 
-builds `dist/hen-extension-<version>.zip` containing only the runtime files (it also checks that the icons exist and have the sizes the manifest claims). Bump `version` in `manifest.json` before each new upload. Listing text, permission justifications and the asset checklist are in [store/LISTING.md](store/LISTING.md); the privacy policy is [PRIVACY.md](PRIVACY.md).
+builds `dist/hen-extension-<version>.zip` (Chrome Web Store / Edge Add-ons) and `dist/hen-extension-<version>-firefox.zip` (addons.mozilla.org) containing only the runtime files. The Firefox zip has the same files, with the Firefox-only manifest keys (add-on id, minimum version, `data_collection_permissions`) added from `FIREFOX` in `scripts/package.js`, so `manifest.json` itself stays Chrome-clean (it also checks that the icons exist and have the sizes the manifest claims). Bump `version` in `manifest.json` before each new upload. To check the Firefox package, unzip it and run Mozilla's linter on the folder: `npx web-ext lint -s <folder>`. Listing text, permission justifications and the asset checklist are in [store/LISTING.md](store/LISTING.md); the privacy policy is [PRIVACY.md](PRIVACY.md).
 
 ## Known limitations
 

@@ -4,12 +4,12 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this is
 
-A Manifest V3 browser extension (Chrome/Edge) that rewrites the Norwegian neopronoun "hen" to han/hun (subject), ham/henne (object), hans/hennes (possessive) on Norwegian pages. Plain JS, no build step, no dependencies, no package.json.
+A Manifest V3 browser extension (Chrome/Edge, and Firefox 140+ via a generated manifest) that rewrites the Norwegian neopronoun "hen" to han/hun (subject), ham/henne (object), hans/hennes (possessive) on Norwegian pages. Plain JS, no build step, no dependencies, no package.json.
 
 ## Commands
 
 - Run tests: `node test/run.js`
-- Build the store package: `node scripts/package.js` → `dist/hen-extension-<version>.zip` (runtime files only; if you add a runtime file, add it to the `files` list in `scripts/package.js`). Store text lives in `store/LISTING.md`, the privacy policy in `PRIVACY.md`; keep both in sync if permissions or stored settings change.
+- Build the store packages: `node scripts/package.js` → `dist/hen-extension-<version>.zip` (Chrome/Edge) and `dist/hen-extension-<version>-firefox.zip` (AMO; `manifest.json` plus the `FIREFOX` keys in `scripts/package.js` — keep Firefox-only keys there, not in `manifest.json`) (runtime files only; if you add a runtime file, add it to the `files` list in `scripts/package.js`). Store text lives in `store/LISTING.md`, the privacy policy in `PRIVACY.md`; keep both in sync if permissions or stored settings change.
 - Try the extension: load this folder unpacked at `chrome://extensions` (Developer mode). After editing, reload the extension and the test page.
 
 Tests are a single `cases` array of `[mode, input, expected, optionalCtx]` in `test/run.js`; add failing real-world sentences there, then tune `hen.js`. There is no single-test runner.
@@ -20,4 +20,4 @@ Tests are a single `cases` array of `[mode, input, expected, optionalCtx]` in `t
 - `content.js` — injected on `<all_urls>`, all frames, `document_idle`; loads **after** `hen.js` (order in `manifest.json` matters). Reads settings from `chrome.storage.sync`, checks the per-host disable list (user setting, which defaults to the `DICTIONARY_HOSTS` list of dictionary sites such as ordnett.no and naob.no; that list is duplicated in `options.js`), does a Norwegian language check (`lang` attr, else word-frequency sniffing, retried a few times if the page has little text), walks text nodes, builds context from the enclosing block via `Range`, and batches `MutationObserver` additions/changes through a debounced queue. Skips script/style/inputs/code/contenteditable and elements whose nearest `[lang]` isn't nb/nn/no. "random" mode picks han or hun once per page load.
 - `options.html` / `options.js` — popup and options page; keep the `DEFAULTS` object in sync with the one in `content.js`. Settings changes only apply after page reload.
 
-Firefox would need a manifest tweak (see README).
+Use only APIs that work under `chrome.*` in both Chrome and Firefox MV3 (promise-style `chrome.storage` does); try Firefox via `about:debugging` → Load Temporary Add-on → the firefox zip.

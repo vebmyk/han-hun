@@ -1,8 +1,8 @@
 # Store listing
 
-Copy-paste text for the Chrome Web Store and Edge Add-ons dashboards. Not part of the package (`scripts/package.js` only zips runtime files).
+Copy-paste text for the Chrome Web Store, Edge Add-ons and Firefox Add-ons (AMO) dashboards. Not part of the package (`scripts/package.js` only zips runtime files).
 
-Package: `node scripts/package.js` → `dist/hen-extension-<version>.zip`. Bump `version` in `manifest.json` before every new upload.
+Package: `node scripts/package.js` → `dist/hen-extension-<version>.zip` (Chrome/Edge) and `dist/hen-extension-<version>-firefox.zip` (AMO). Bump `version` in `manifest.json` before every new upload.
 
 ## Basics
 
@@ -88,6 +88,10 @@ Alt skjer i nettleseren din. Utvidelsen samler ikke inn noe, sender ikke noe og 
 **Remote code:** No. All code ships in the package; there are no remote scripts, no `eval`, and no network requests.
 
 **Data usage:** Tick none of the data-collection categories. The extension does not collect or transmit user data. Then tick all three certifications (no selling data, no unrelated use, no creditworthiness/lending use).
+
+## Firefox Add-ons (AMO)
+
+Upload `dist/hen-extension-<version>-firefox.zip` at addons.mozilla.org/developers. The description and summary above can be reused (AMO summary max 250 characters). Data collection is declared in the manifest as `none`, so there is nothing to tick. No source code upload is needed: the code is not minified or bundled. License: GPL. Privacy policy: the contents of `PRIVACY.md`. The add-on id (`han-hun@vebmyk`, in `scripts/package.js`) cannot change after the first upload.
 
 ## Assets to produce
 

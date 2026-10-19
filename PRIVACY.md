@@ -1,6 +1,6 @@
 # Privacy policy / Personvernerklæring
 
-*Hen → han/hun* – browser extension. Last updated: 2026-10-06.
+*Hen → han/hun* – browser extension. Last updated: 2026-10-20.
 
 ## English
 
@@ -8,7 +8,7 @@
 
 **Page content.** To replace the word "hen", the extension reads the text of the web pages you visit. This happens entirely inside your browser. The text is not stored, logged or sent anywhere.
 
-**Settings.** The extension saves your settings with the browser's `storage.sync` API: whether it is enabled, the replacement mode, whether the language check is skipped, whether quoted "hen" is left alone, and the list of websites you have disabled. This data stays in your browser. If browser sync is turned on, your browser vendor (Google or Microsoft) may sync it between your own devices under its own privacy policy. The developer has no access to it.
+**Settings.** The extension saves your settings with the browser's `storage.sync` API: whether it is enabled, the replacement mode, whether the language check is skipped, whether quoted "hen" is left alone, and the list of websites you have disabled. This data stays in your browser. If browser sync is turned on, your browser vendor (Google, Microsoft or Mozilla) may sync it between your own devices under its own privacy policy. The developer has no access to it.
 
 **Permissions.**
 - `storage` – to save the settings above.
@@ -24,7 +24,7 @@
 
 **Sideinnhold.** For å erstatte ordet «hen» leser utvidelsen teksten på sidene du besøker. Dette skjer helt og holdent i nettleseren din. Teksten lagres ikke, loggføres ikke og sendes ikke noe sted.
 
-**Innstillinger.** Utvidelsen lagrer innstillingene dine med nettleserens `storage.sync`-API: om den er aktivert, erstatningsmodus, om språksjekken hoppes over, og listen over nettsteder du har deaktivert. Disse dataene blir værende i nettleseren din. Hvis synkronisering er slått på, kan nettleserleverandøren din (Google eller Microsoft) synkronisere dem mellom dine egne enheter i tråd med sin egen personvernerklæring. Utvikleren har ikke tilgang til dem.
+**Innstillinger.** Utvidelsen lagrer innstillingene dine med nettleserens `storage.sync`-API: om den er aktivert, erstatningsmodus, om språksjekken hoppes over, og listen over nettsteder du har deaktivert. Disse dataene blir værende i nettleseren din. Hvis synkronisering er slått på, kan nettleserleverandøren din (Google, Microsoft eller Mozilla) synkronisere dem mellom dine egne enheter i tråd med sin egen personvernerklæring. Utvikleren har ikke tilgang til dem.
 
 **Tillatelser.**
 - `storage` – for å lagre innstillingene over.
